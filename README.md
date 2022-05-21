@@ -1,9 +1,9 @@
-30.05.2022 - Heisenbug - Нагрузочное тестирование с помощью Python и Locust.
+**30.05.2022 - Heisenbug - Нагрузочное тестирование с помощью Python и Locust.**
 
-Чек лист для запуска теста:
+**Чек лист для первого запуска теста:**
 
 1. Установить Docker
-2. Установить Python. Для демонстрации работы скрипты на Heisenbug_2022 использовался Python 3.10.1
+2. Установить Python (для демонстрации на Heisenbug_2022 использовался Python 3.10.1)
 3. Через командную строку открыть папку "./docker" из данного репозитория и выполнить команды:
       docker-compose build
       docker-compose up -d
@@ -15,9 +15,10 @@
       в которую сохраняется время выполнения операций, запущенных по ходу теста
 4. Перейти в папку "./demo_code" и выполнить команду для установки необходимых Python- модулей (команда зависит от ОС)
       python3 -m pip install -r requirements.txt
-5. Для запуска теста:
-      в режиме без интерфейса: locust -f locustfile.py --headless --html=locust_report.html
-      в режиме с интерфейсом (localhost:8089): locust -f locustfile.py
-      в распределенном режиме на одной машине: 
-        в терминале №1: locust -f locustfile.py --master
+
+**Запуск теста:**
+      режим без интерфейса: locust -f locustfile.py --headless --html=locust_report.html
+      режим с интерфейсом (localhost:8089): locust -f locustfile.py
+      распределенный режим на одной машине: 
+        в терминале №1 выполнить: locust -f locustfile.py --master
         в терминале №2,3 и т.д.: locust -f locustfile.py --worker --master-host=localhost
