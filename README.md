@@ -4,9 +4,9 @@
 1. Установить Docker
 2. Установить Python (для демонстрации на Heisenbug_2022 использовался Python 3.10.1)
 3. Через командную строку открыть папку "./docker" из данного репозитория и выполнить команды:
-      
-      docker-compose build
-      docker-compose up -d
+
+      - docker-compose build
+      - docker-compose up -d
 
 3. После выполнения этих команд на вашей машине развернется четыре докер- контейнера:
       
@@ -24,6 +24,6 @@
 - режим без интерфейса: locust -f locustfile.py --headless --html=locust_report.html
 - режим с интерфейсом (localhost:8089): locust -f locustfile.py
 - распределенный режим на одной машине: 
-      
-      в терминале №1 выполнить: locust -f locustfile.py --master
-      в терминале №2,3 и т.д.: locust -f locustfile.py --worker --master-host=localhost
+
+      - в терминале №1 выполнить: locust -f locustfile.py --master
+      - в терминале №2,3 и т.д.: locust -f locustfile.py --worker --master-host=localhost
