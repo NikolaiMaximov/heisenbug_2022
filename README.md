@@ -17,8 +17,8 @@
 
 **Запуск теста:**
 
-      режим без интерфейса: locust -f locustfile.py --headless --html=locust_report.html
-      режим с интерфейсом (localhost:8089): locust -f locustfile.py
-      распределенный режим на одной машине: 
-        в терминале №1 выполнить: locust -f locustfile.py --master
-        в терминале №2,3 и т.д.: locust -f locustfile.py --worker --master-host=localhost
+- режим без интерфейса: locust -f locustfile.py --headless --html=locust_report.html
+- режим с интерфейсом (localhost:8089): locust -f locustfile.py
+- распределенный режим на одной машине: 
+      в терминале №1 выполнить: locust -f locustfile.py --master
+      в терминале №2,3 и т.д.: locust -f locustfile.py --worker --master-host=localhost
