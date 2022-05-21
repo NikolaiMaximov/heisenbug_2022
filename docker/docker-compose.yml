@@ -1,0 +1,50 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+  
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    command: sh -c "
+       ((sleep 15 
+       && kafka-topics --bootstrap-server kafka:29092 --create --topic input-topic --replication-factor 1 --partitions 1 
+       && kafka-topics --bootstrap-server kafka:29092 --create --topic output-topic --replication-factor 1 --partitions 1
+       )&) && /etc/confluent/docker/run 
+       "
+
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - 8086:8086
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=username
+      - DOCKER_INFLUXDB_INIT_PASSWORD=passwordpasswordpassword
+      - DOCKER_INFLUXDB_INIT_ORG=demo_org
+      - DOCKER_INFLUXDB_INIT_BUCKET=demo_bucket
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=demo_token
+
+  mock:
+    build: .
+    container_name: mock
+    command: uvicorn locust_mock:app --timeout-keep-alive 120 --host 0.0.0.0
+    ports:
+      - 9090:8000
