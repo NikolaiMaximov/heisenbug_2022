@@ -17,6 +17,7 @@
       python3 -m pip install -r requirements.txt
 
 **Запуск теста:**
+
       режим без интерфейса: locust -f locustfile.py --headless --html=locust_report.html
       режим с интерфейсом (localhost:8089): locust -f locustfile.py
       распределенный режим на одной машине: 
