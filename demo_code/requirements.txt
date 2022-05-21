@@ -1,0 +1,3 @@
+locust
+kafka-python
+influxdb_client
