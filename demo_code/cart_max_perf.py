@@ -13,7 +13,7 @@ class CartUser(HttpUser):
 
     @task
     def add_to_cart(self) -> None:
-        transaction = self.send_http.__name__
+        transaction = self.add_to_cart.__name__
         headers = {
             "accept": "text/html",
             "accept-encoding": "gzip, deflate, br",

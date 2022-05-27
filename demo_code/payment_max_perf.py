@@ -18,18 +18,18 @@ class KafkaUser(User):
         self.kfk = kafka_sender.KafkaSender()
 
     @task
-    def send_message(self):
+    def send_payment(self):
         request_start_time = time.time()
         self.kfk.send()
         processing_time = int((time.time() - request_start_time) * 1000)
-        events.request.fire(
-            request_type="KAFKA",
-            name='send_kafka',
-            response_time=processing_time,
-            response_length=0,
-            context=None,
-            exception=None,
-        )
+        # events.request.fire(
+        #     request_type="KAFKA",
+        #     name='send_payment',
+        #     response_time=processing_time,
+        #     response_length=0,
+        #     context=None,
+        #     exception=None,
+        # )
 
     @events.test_stop.add_listener
     def on_test_stop(environment, **kwargs):

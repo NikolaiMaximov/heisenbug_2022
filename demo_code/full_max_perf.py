@@ -15,7 +15,7 @@ def proceed_request(func):
         transaction = func(*args, **kwargs)
         processing_time = int((time.time() - request_start_time) * 1000)
 
-        if func.__name__ == "send_kafka":
+        if func.__name__ == "send_payment":
             events.request.fire(
                 request_type="KAFKA",
                 name=func.__name__,
@@ -38,7 +38,11 @@ def proceed_request(func):
             }],
         )
 
-        logger.debug(f"{func.__name__} status: {transaction.status_code if func.__name__ != 'send_kafka' else 'message delivered'}")
+        logger.debug(
+            f"""{func.__name__} status: {transaction.status_code 
+            if func.__name__ != 'send_payment'
+            else 'message delivered'}"""
+        )
 
     return wrapper
 
@@ -59,7 +63,7 @@ class GlobalUser(HttpUser):
     @task(5)
     @proceed_request
     def add_to_cart(self) -> None:
-        transaction = self.send_http.__name__
+        transaction = self.add_to_cart.__name__
         headers = {
             "accept": "text/html",
             "accept-encoding": "gzip, deflate, br",
@@ -77,7 +81,7 @@ class GlobalUser(HttpUser):
 
     @task(5)
     @proceed_request
-    def send_kafka(self):
+    def send_payment(self):
         self.kfk.send()
         return None
 
