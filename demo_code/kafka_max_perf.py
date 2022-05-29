@@ -7,7 +7,6 @@ import kafka_sender
 
 class KafkaUser(User):
     wait_time = constant_pacing(cfg.pacing_sec)
-    host = cfg.api_host
 
     @events.test_start.add_listener
     def on_test_start(environment, **kwargs):
